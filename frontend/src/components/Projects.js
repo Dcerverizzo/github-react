@@ -16,14 +16,30 @@ export default class Projects extends React.Component {
   }
 
   fetch() {
+    const projects = [];
     const context = this;
     $.ajax({
-      url: 'http://localhost:5000/repos',
+      url: 'https://api.github.com/users/dcerverizzo/repos',
       method: 'GET',
       success: function (response) {
+        response.forEach((element, index) => {
+          var date = new Date(element.pushed_at);
+          var day = date.getDate().toString().padStart(2, '0')
+          var month = (date.getMonth() + 1).toString().padStart(2, '0')
+          var year = date.getFullYear().toString().padStart(4, '0')
+          var year = `${month}/${day}/${year}`;
+          var id, full_name, url, last_commit;
+          projects[index] =
+            [
+              id = index,
+              full_name = element.name,
+              url = element.html_url,
+              last_commit = year
+            ];
+        });
         context.setState({
-          initialProjects: response,
-          repos: response,
+          initialProjects: projects,
+          repos: projects,
         });
       }
     });

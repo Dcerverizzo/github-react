@@ -21,13 +21,13 @@ export default class Profile extends React.Component {
     var context = this;
 
     $.ajax({
-      url: 'http://localhost:5000/',
+      url: 'https://api.github.com/users/dcerverizzo',
       method: 'GET',
       success: function (response) {
         context.setState({
           name: response.name,
           bio: response.bio,
-          avatar: response.avatar,
+          avatar: response.avatar_url,
           followers: response.followers
         });
       }
@@ -43,9 +43,9 @@ export default class Profile extends React.Component {
             <div className=" image d-flex flex-column
             justify-content-center align-items-center">
               <button className="btn
-                btn-secondary"> 
+                btn-secondary">
                 <img src={this.state.avatar}
-                  height="100" width="100" alt="profile pic"/>
+                  height="100" width="100" alt="profile pic" />
               </button>
               <span className="name mt-3">{this.state.name}</span>
               <span className="idd">@dancerverizzo</span>
@@ -56,11 +56,11 @@ export default class Profile extends React.Component {
 
               <div className="text mt-3">
                 <span>{this.state.bio}</span>
-                  </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
     );
   }
 }
